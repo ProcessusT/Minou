@@ -1,9 +1,12 @@
 # Minou
 
 Bot Discord écrit pour python3
+
 Les version 2.x de python renverront une erreur
 
 Les fonctions sont englobées dans des try-catch qui inscrivent le debug dans /var/log/syslog
+
+
 
 
 
