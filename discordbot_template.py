@@ -45,12 +45,12 @@ async def help(ctx):
         embed.add_field(name="!think", value="Affiche un GIF de réflexion aléatoire", inline=False)
         embed.add_field(name="!yes", value="Affiche un GIF d'acquiessement aléatoire", inline=False)
         embed.add_field(name="!no", value="Affiche un GIF de négation aléatoire", inline=False)
-        embed.add_field(name="!hacker", value="Affiche un GIF de h@ck3r al  atoire", inline=False)
+        embed.add_field(name="!hacker", value="Affiche un GIF de h@ck3r aléatoire", inline=False)
         embed.add_field(name="!miaou -- VOCAL", value="Miaule dans le channel vocal", inline=False)
         embed.add_field(name="!miaou_angry -- VOCAL", value="OCTOGONE DE CHATS", inline=False)
         embed.add_field(name="!maisoui -- VOCAL", value="Réflexion nucléaire des rollers.", inline=False)
         embed.add_field(name="!nani -- VOCAL", value="You are already dead.", inline=False)
-        embed.add_field(name="!accept @user  -- ADMINS", value="Permet d'attribuer le rôle chaton", inline=False)
+        embed.add_field(name="!accept @user  -- ADMINS", value="Permet d'attribuer le rÃ´le chaton", inline=False)
         embed.add_field(name="!ban @user  -- ADMINS", value="Permet de bannir un utilisateur", inline=False)
         embed.add_field(name="!clear <int>  -- ADMINS", value="Permet de nettoyer les messages d'un channel", inline=False)
         await ctx.send(embed=embed)
@@ -74,6 +74,7 @@ async def miaou(ctx):
         print(str(e))
         my_logger.debug(str(e))
 
+
 @bot.command()
 async def maisoui(ctx):
     try:
@@ -85,6 +86,8 @@ async def maisoui(ctx):
     except Exception as e:
         print(str(e))
         my_logger.debug(str(e))
+
+
 
 @bot.command()
 async def nani(ctx):
@@ -98,6 +101,7 @@ async def nani(ctx):
         print(str(e))
         my_logger.debug(str(e))
 
+
 @bot.command()
 async def miaou_angry(ctx):
     try:
@@ -109,10 +113,6 @@ async def miaou_angry(ctx):
     except Exception as e:
         print(str(e))
         my_logger.debug(str(e))
-
-
-
-
 
 
 
@@ -171,16 +171,9 @@ async def hacker(ctx):
 
 
 
-
-
-# commande d'excuse
 @bot.command()
 async def excusetoi(ctx):
     await ctx.send("Pardon :(")
-
-
-
-
 
 
 # commande pour passer un utilisateur en chaton
@@ -192,7 +185,7 @@ async def accept(ctx, member: discord.Member):
         for role in ctx.author.roles:
             if str(role.id) == str(<id admin>) or str(role.id) == str(<id moderateur>):
                 print(member)
-                role = discord.utils.get(member.guild.roles, id=<id admin>)
+                role = discord.utils.get(member.guild.roles, id=<id membre>)
                 print(role)
                 await member.add_roles(role)
                 await ctx.send(str(member)+" est devenu un petit chaton !")
@@ -228,7 +221,8 @@ async def on_member_join(member):
         my_logger.debug('Discorbot : '+str(member)+"has joined")
         channel = member.guild.text_channels[0]
         await asyncio.sleep(2)
-        await channel.send("Bienvenue @"+str(member)+" !\n\nJe suis Minou le gentil chaton\nPour le moment seul ce channel t'est accessible\nMerci de bien vouloir compléter cette présentation\nafin qu'un modérateur valide ta candidature : \n\nTon âge : \nTes domaines de compétences (réseau, systèmes, web, dev) : \nDonne un compliment sur les chats : ")
+        await member.send("Coucou !\n\nJe suis Minou le gentil chaton\nPour le moment seul le channel \#la-chatiere t'est accessible\nMerci de bien vouloir compléter cette présentation \n(directement dans le channel \#la-chatiere, pas ici !)\nafin qu'un mod  rateur valide ta candidature : \n\nTon âge : \nTes domaines de compétences (réseau, systèmes, web, dev) : \nDonne un compliment sur les chats : ")
+        await channel.send("Bienvenue !\n\nJe suis Minou le gentil chaton\nPour le moment seul ce channel t'est accessible\nMerci de bien vouloir compléter cette présentation\nafin qu'un modérateur valide ta candidature : \n\nTon âge : \nTes domaines de compétences (réseau, systèmes, web, dev) : \nDonne un compliment sur les chats : ")
     except Exception as e:
         print(str(e))
         my_logger.debug(str(e))
