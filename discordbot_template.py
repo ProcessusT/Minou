@@ -183,7 +183,7 @@ async def accept(ctx, member: discord.Member):
     try:
         # role veto ou secretaire uniquement
         for role in ctx.author.roles:
-            if str(role.id) == str(<id admin>) or str(role.id) == str(<id moderateur>):
+            if str(role.id) == str(<id admin>) or str(role.id) == str(<id modérateur>):
                 print(member)
                 role = discord.utils.get(member.guild.roles, id=<id membre>)
                 print(role)
@@ -204,7 +204,7 @@ async def ban(ctx, member: discord.Member):
             await ctx.send("Le maitre des croquettes ne peut pas être banni !")
         # role veto ou secretaire uniquement
         for role in ctx.author.roles:
-            if str(role.id) == str(<id admin>) or str(role.id) == str(<id moderateur>):
+            if str(role.id) == str(<id admin>) or str(role.id) == str(<id modérateur>):
     	        my_logger.debug('Discorbot : '+str(member)+" a été banni !")
     	        await member.ban(reason="Miaou")
     	        await ctx.send(str(member)+" a été banni !")
@@ -221,7 +221,8 @@ async def on_member_join(member):
         my_logger.debug('Discorbot : '+str(member)+"has joined")
         channel = member.guild.text_channels[0]
         await asyncio.sleep(2)
-        await member.send("Coucou !\n\nJe suis Minou le gentil chaton\nPour le moment seul le channel \#la-chatiere t'est accessible\nMerci de bien vouloir compléter cette présentation \n(directement dans le channel \#la-chatiere, pas ici !)\nafin qu'un mod  rateur valide ta candidature : \n\nTon âge : \nTes domaines de compétences (réseau, systèmes, web, dev) : \nDonne un compliment sur les chats : ")
+        await member.send("Coucou !\n\nJe suis Minou le gentil chaton\nPour le moment seul le channel \#la-chatiere t'est accessible\nMerci de bien vouloir compléter cette présentation \n(directement dans le channel \#la-chatiere, pas ici !)\nafin qu'un modérateur valide ta candidature : \n\nTon âge : \nTes domaines de compétences (réseau, systèmes, web, dev) : \nDonne un compliment sur les chats : ")
+        await channel.send( member.mention + " has joined !")
         await channel.send("Bienvenue !\n\nJe suis Minou le gentil chaton\nPour le moment seul ce channel t'est accessible\nMerci de bien vouloir compléter cette présentation\nafin qu'un modérateur valide ta candidature : \n\nTon âge : \nTes domaines de compétences (réseau, systèmes, web, dev) : \nDonne un compliment sur les chats : ")
     except Exception as e:
         print(str(e))
@@ -246,7 +247,7 @@ async def on_member_remove(member):
 async def clear(ctx, amount=100):
     try:
         for role in ctx.author.roles:
-            if str(role.id) == str(<id admin>) or str(role.id) == str(<id moderateur>):
+            if str(role.id) == str(<id admin>) or str(role.id) == str(<id modérateur>):
                 channel=ctx.message.channel
                 messages=[]
                 async for message in channel.history(limit=int(amount)):
