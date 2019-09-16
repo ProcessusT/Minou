@@ -5,7 +5,8 @@ import asyncio
 import logging
 import logging.handlers
 import random
-
+from gtts import gTTS
+import eyed3
 
 my_logger = logging.getLogger('Discordbot launcher')
 my_logger.setLevel(logging.DEBUG)
@@ -30,6 +31,45 @@ async def on_ready():
 
 
 
+#TTS   tts les chats sont mes amis
+@bot.command()
+async def tts(ctx, message: str):
+    try:
+        for role in ctx.author.roles:
+            if str(role.id) == str(<ID ADMIN>):
+                channel = ctx.message.author.voice.channel
+                tts = gTTS(text=str(message),lang=str("fr"))
+                tts.save("my_tts.mp3")
+                vc = await channel.connect()
+                vc.play(discord.FFmpegPCMAudio("my_tts.mp3"), after=lambda e: print('done', e))
+                duration = eyed3.load('my_tts.mp3').info.time_secs
+                await asyncio.sleep(duration)
+                await vc.disconnect()
+    except Exception as e:
+        print(str(e))
+        my_logger.debug(str(e))
+
+
+
+
+
+
+#MUSIC mbk rocket vocal
+@bot.command()
+async def mbk(ctx):
+    try:
+        channel = ctx.message.author.voice.channel
+        vc = await channel.connect()
+        vc.play(discord.FFmpegPCMAudio("/root/mbk.mp3"), after=lambda e: print('done', e))
+        await asyncio.sleep(3)
+        await vc.disconnect()
+    except Exception as e:
+        print(str(e))
+        my_logger.debug(str(e))
+
+
+
+
 
 # commande d'aide - a completer
 bot.remove_command('help')
@@ -50,7 +90,7 @@ async def help(ctx):
         embed.add_field(name="!miaou_angry -- VOCAL", value="OCTOGONE DE CHATS", inline=False)
         embed.add_field(name="!maisoui -- VOCAL", value="Réflexion nucléaire des rollers.", inline=False)
         embed.add_field(name="!nani -- VOCAL", value="You are already dead.", inline=False)
-        embed.add_field(name="!accept @user  -- ADMINS", value="Permet d'attribuer le rÃ´le chaton", inline=False)
+        embed.add_field(name="!accept @user  -- ADMINS", value="Permet d'attribuer le rôle chaton", inline=False)
         embed.add_field(name="!ban @user  -- ADMINS", value="Permet de bannir un utilisateur", inline=False)
         embed.add_field(name="!clear <int>  -- ADMINS", value="Permet de nettoyer les messages d'un channel", inline=False)
         await ctx.send(embed=embed)
@@ -183,9 +223,9 @@ async def accept(ctx, member: discord.Member):
     try:
         # role veto ou secretaire uniquement
         for role in ctx.author.roles:
-            if str(role.id) == str(<id admin>) or str(role.id) == str(<id modérateur>):
+            if str(role.id) == str(<ID ADMIN>) or str(role.id) == str(<ID MODO2>) or str(role.id) == str(<ID MODO>):
                 print(member)
-                role = discord.utils.get(member.guild.roles, id=<id membre>)
+                role = discord.utils.get(member.guild.roles, id=<ID MEMBRE>)
                 print(role)
                 await member.add_roles(role)
                 await ctx.send(str(member)+" est devenu un petit chaton !")
@@ -201,10 +241,10 @@ async def ban(ctx, member: discord.Member):
         await ctx.send("Miaou !")
         my_logger.debug('Discordbot : Ban demandé pour '+str(member))
         if str(member) == "Processus#5439":
-            await ctx.send("Le maitre des croquettes ne peut pas être banni !")
+            await ctx.send("Le maitre des croquettes ne peut pas Ãªtre banni !")
         # role veto ou secretaire uniquement
         for role in ctx.author.roles:
-            if str(role.id) == str(<id admin>) or str(role.id) == str(<id modérateur>):
+            if str(role.id) == str(<ID ADMIN>) or str(role.id) == str(<ID MODO>) or str(role.id) == str(<ID MODO2>):
     	        my_logger.debug('Discorbot : '+str(member)+" a été banni !")
     	        await member.ban(reason="Miaou")
     	        await ctx.send(str(member)+" a été banni !")
@@ -247,7 +287,7 @@ async def on_member_remove(member):
 async def clear(ctx, amount=100):
     try:
         for role in ctx.author.roles:
-            if str(role.id) == str(<id admin>) or str(role.id) == str(<id modérateur>):
+            if str(role.id) == str(<ID ADMIN>) or str(role.id) == str(<ID MODO2>):
                 channel=ctx.message.channel
                 messages=[]
                 async for message in channel.history(limit=int(amount)):
@@ -262,6 +302,6 @@ async def clear(ctx, amount=100):
 
 
 try:
-    bot.run(<token>)
+    bot.run('<TOKEN>')
 except KeyboardInterrupt:
         print("\n\n************************************\n\n")
