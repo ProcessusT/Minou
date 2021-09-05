@@ -80,7 +80,6 @@ async def help(ctx):
         embed=discord.Embed(title="Aide", color=0xff0080)
         embed.add_field(name="!help", value="Affiche cette aide", inline=False)
         embed.add_field(name="!cat", value="Affiche un GIF de chat aléatoire", inline=False)
-        embed.add_field(name="!dog", value="Je n'aime pas les chiens. Fonction qui vous kick.", inline=False)
         embed.add_field(name="!what", value="Affiche un GIF 'WHAT' aléatoire", inline=False)
         embed.add_field(name="!think", value="Affiche un GIF de réflexion aléatoire", inline=False)
         embed.add_field(name="!yes", value="Affiche un GIF d'acquiessement aléatoire", inline=False)
@@ -173,11 +172,6 @@ async def cat(ctx):
     chats=["https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif", "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif","http://giphygifs.s3.amazonaws.com/media/13CoXDiaCcCoyk/giphy.gif","https://media.giphy.com/media/Q94xQWspTUkShljj8P/giphy.gif","https://media.giphy.com/media/WXB88TeARFVvi/giphy.gif","https://media.giphy.com/media/5i7umUqAOYYEw/giphy.gif","https://media.giphy.com/media/GFHJXPCoVQEec/giphy.gif","https://media.giphy.com/media/3oEdvbAVPeVsPDQL5u/giphy.gif","https://media.giphy.com/media/Nm8ZPAGOwZUQM/giphy.gif","https://media.giphy.com/media/QyJ0We4GHpjBa7PvKL/giphy.gif","https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif","https://media.giphy.com/media/NjevnbNiUmeLm/giphy.gif","https://media.giphy.com/media/cuPm4p4pClZVC/giphy.gif","http://giphygifs.s3.amazonaws.com/media/nR4L10XlJcSeQ/giphy.gif","https://media.giphy.com/media/jRlP4zbERYW5HoCLvX/giphy.gif"]
     thisone = random.choice(chats)
     await ctx.send(str(thisone))
-
-@bot.command()
-async def dog(ctx):
-    await ctx.author.kick(reason="Miaou")
-    await ctx.send("NON.")
 
 @bot.command()
 async def what(ctx):
@@ -298,7 +292,11 @@ async def clear(ctx, amount=100):
         print(str(e))
         my_logger.debug(str(e))
 
-
+# Kick toutes personne utilisant les mots "dog" ou "chien" dans leurs messages (Ne tient pas compte de la case)
+@bot.listen("on_message")
+async def on_message(message):
+  if "dog" in message.lower() or "chien" in message.lower():
+    await message.author.kick(reason="Miaou")
 
 
 try:
